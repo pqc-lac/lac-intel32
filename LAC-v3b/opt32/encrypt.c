@@ -46,11 +46,6 @@ static int d2_decode(uint8_t *v1, uint8_t *v2, uint8_t *data, int len)
 //key generation
 int crypto_encrypt_keypair( uint8_t *pk, uint8_t *sk)
 {
-	//check parameter
-	if(pk==NULL || sk==NULL)
-	{
-		return -1;
-	}
 	kg(pk,sk);
 	
 	return 0;
@@ -59,11 +54,6 @@ int crypto_encrypt_keypair( uint8_t *pk, uint8_t *sk)
 //encryption
 int crypto_encrypt( uint8_t *c, unsigned long long *clen, const uint8_t *m, unsigned long long mlen, const uint8_t *pk)
 {
-	//check parameter
-	if(c==NULL || m==NULL || pk==NULL)
-	{
-		return -1;
-	}
 	if(mlen>MESSAGE_LEN)
 	{
 		return -1;
@@ -76,13 +66,7 @@ int crypto_encrypt( uint8_t *c, unsigned long long *clen, const uint8_t *m, unsi
 }
 //decryption
 int crypto_encrypt_open(uint8_t *m, unsigned long long *mlen,const uint8_t *c, unsigned long long clen,const uint8_t *sk)
-{
-	//check parameter
-	if(sk==NULL || m==NULL || c==NULL || mlen==NULL)
-	{
-		return -1;
-	}
-	
+{	
 	//call pke decryption function
 	pke_dec(sk,c,clen,m,mlen);
 
@@ -95,11 +79,6 @@ int kg_seed(uint8_t *pk, uint8_t *sk, uint8_t *seed)
 	uint8_t seeds[3*SEED_LEN];
 	uint8_t a[DIM_N];
 	uint8_t e[DIM_N];
-	//check pointer
-	if(pk==NULL || sk==NULL)
-	{
-		return -1;
-	}
 	
 	//generate three seeds for a,sk,e
 	pseudo_random_bytes(seeds,3*SEED_LEN,seed);	
@@ -150,12 +129,6 @@ int pke_enc(const uint8_t *pk, const uint8_t *m, unsigned long long mlen, uint8_
 // decrypt
 int pke_dec(const uint8_t *sk, const uint8_t *c,unsigned long long clen, uint8_t *m, unsigned long long *mlen)
 {
-	//check parameter
-	if(sk==NULL || m==NULL || c==NULL)
-	{
-		return -1;
-	}
-	
 	uint8_t out[DIM_N];
 	uint8_t c2[C2_VEC_NUM];
 	int c2_len=(clen-DIM_N)*2;
@@ -227,12 +200,7 @@ int pke_enc_seed(const uint8_t *pk, const uint8_t *m, unsigned long long mlen, u
 	uint8_t a[DIM_N];
 	
 	int c2_len;
-	
-	//check parameter
-	if(pk==NULL || m==NULL || c==NULL )
-	{
-		return -1;
-	}
+
 	if(mlen>MESSAGE_LEN)
 	{
 		return -1;

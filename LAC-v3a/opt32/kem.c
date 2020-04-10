@@ -28,13 +28,6 @@ int kem_enc_fo(const uint8_t *pk, uint8_t *k, uint8_t *c)
 {
 	uint8_t buf[MESSAGE_LEN],seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
 	unsigned long long clen;
-
-	
-	//check parameter
-	if(pk==NULL || k==NULL || c==NULL)
-	{
-		return -1;
-	}
 	
 	//generate random message m, stored in buf
 	random_bytes(buf,MESSAGE_LEN);
@@ -56,13 +49,6 @@ int kem_enc_fo_seed(const uint8_t *pk, uint8_t *k, uint8_t *c, uint8_t *seed)
 {
 	uint8_t buf[MESSAGE_LEN],local_seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
 	unsigned long long clen;
-
-	
-	//check parameter
-	if(pk==NULL || k==NULL || c==NULL)
-	{
-		return -1;
-	}
 	
 	//generate random message m from seed, stored in buf
 	pseudo_random_bytes(buf,MESSAGE_LEN,seed);
@@ -85,12 +71,6 @@ int kem_dec_fo(const uint8_t *pk, const uint8_t *sk, const uint8_t *c, uint8_t *
 	uint8_t buf[MESSAGE_LEN+CIPHER_LEN],seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
 	unsigned long long mlen,clen;
 	uint8_t c_v[CIPHER_LEN];
-	
-	//check parameter
-	if(pk==NULL || sk==NULL || k==NULL || c==NULL)
-	{
-		return -1;
-	}
 	
 	//compute m from c
 	pke_dec(sk,c,CIPHER_LEN, buf,&mlen);
