@@ -11,11 +11,6 @@
 //random bytes
 int random_bytes(uint8_t *r, unsigned int len)
 {
-	//check parameter
-	if(r==NULL)
-	{
-		return 1;
-	}
 	// call the random function 
 	RAND_bytes(r,len);
 //	randombytes(r,len);
@@ -30,11 +25,7 @@ int pseudo_random_bytes(uint8_t *r, unsigned int len, const uint8_t *seed)
 	uint8_t data[AES_BLOCK_SIZE],c[AES_BLOCK_SIZE];
 //	unsigned int *p=(unsigned int *)data;
 	int i,loop=len/AES_BLOCK_SIZE;
-	//check  parameter
-	if(r==NULL || seed==NULL)
-	{
-		return 1;
-	}
+
 	memset(r,0,len);
 	EVP_CIPHER_CTX *ctx;
 	ctx = EVP_CIPHER_CTX_new();
@@ -62,12 +53,6 @@ int pseudo_random_bytes(uint8_t *r, unsigned int len, const uint8_t *seed)
 //hash
 int hash(const uint8_t *in, unsigned int len_in, uint8_t * out)
 {
-	//check  parameter
-	if(in==NULL || out==NULL)
-	{
-		return 1;
-	}	
-	
 	SHA256(in,len_in,out);
 	
 	return 0;
@@ -76,11 +61,6 @@ int hash(const uint8_t *in, unsigned int len_in, uint8_t * out)
 //hash
 int hash_to_k(const uint8_t *in, unsigned int len_in, uint8_t * out)
 {
-	//check  parameter
-	if(in==NULL || out==NULL)
-	{
-		return 1;
-	}	
 	uint8_t tmp_out[32];
 	
 	SHA256(in,len_in,tmp_out);
@@ -92,12 +72,6 @@ int hash_to_k(const uint8_t *in, unsigned int len_in, uint8_t * out)
 //generate seed
 int gen_seed(uint8_t *in, unsigned int len_in, uint8_t * out)
 {
-	//check  parameter
-	if(in==NULL || out==NULL)
-	{
-		return 1;
-	}
-		
 	SHA256(in,len_in,out);
 	return 0;
 }

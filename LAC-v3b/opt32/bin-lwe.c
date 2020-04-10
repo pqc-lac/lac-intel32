@@ -7,12 +7,6 @@
 //generate the public parameter a from seed
 int gen_a(uint8_t *a,  const uint8_t *seed)
 {
-    //check the pointers
-    if(a==NULL || seed==NULL)
-    {
-        return 1;
-    }
-    
     pseudo_random_bytes(a,DIM_N,seed);
     //use first 32 bytes of a as seed to generate buf data for replace
     
@@ -23,12 +17,6 @@ int gen_a(uint8_t *a,  const uint8_t *seed)
 //use for e,e1,e2
 int gen_e(uint8_t *e,  uint8_t *seed)
 {
-	
-	if(e==NULL)
-	{
-		return 1;
-	}
-	
 	int i;
 	uint16_t buf[NUM_ONE*2];
 	gen_r((uint8_t *)buf,seed);
@@ -45,12 +33,6 @@ int gen_e(uint8_t *e,  uint8_t *seed)
 //for r,s
 int gen_r(uint8_t *r,  uint8_t *seed)
 {
-    
-    if(r==NULL)
-    {
-        return 1;
-    }
-    
     int i,p;
     uint16_t tmp;
     uint16_t  r_buf[DIM_N],index[SAMPLE_LEN],tmp_index,index_mk;
