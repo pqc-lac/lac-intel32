@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 //error corretion encode
-int ecc_enc(const unsigned char *d, unsigned char *c)
+int ecc_enc(const uint8_t *d, uint8_t *c)
 {
-	unsigned char ecc[ECC_LEN];
+	uint8_t ecc[ECC_LEN];
 	
 	//encoode
 	encode_bch(d,DATA_LEN,ecc);
@@ -19,10 +19,10 @@ int ecc_enc(const unsigned char *d, unsigned char *c)
 }
 
 //error corrction decode
-int ecc_dec(unsigned char *d, const unsigned char *c)
+int ecc_dec(uint8_t *d, const uint8_t *c)
 {
 	int error_num;
-	unsigned char ecc[ECC_LEN];
+	uint8_t ecc[ECC_LEN];
 	
 	//copy data from c to_d
 	memcpy(d,c,DATA_LEN);

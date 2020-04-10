@@ -9,7 +9,7 @@
 #include <openssl/evp.h>
 
 //random bytes
-int random_bytes(unsigned char *r, unsigned int len)
+int random_bytes(uint8_t *r, unsigned int len)
 {
 	//check parameter
 	if(r==NULL)
@@ -23,11 +23,11 @@ int random_bytes(unsigned char *r, unsigned int len)
 }
 
 //pseudo-random bytes
-int pseudo_random_bytes(unsigned char *r, unsigned int len, const unsigned char *seed)
+int pseudo_random_bytes(uint8_t *r, unsigned int len, const uint8_t *seed)
 {
 	
 	int c_len;
-	unsigned char data[AES_BLOCK_SIZE],c[AES_BLOCK_SIZE];
+	uint8_t data[AES_BLOCK_SIZE],c[AES_BLOCK_SIZE];
 //	unsigned int *p=(unsigned int *)data;
 	int i,loop=len/AES_BLOCK_SIZE;
 	//check  parameter
@@ -60,7 +60,7 @@ int pseudo_random_bytes(unsigned char *r, unsigned int len, const unsigned char 
 }
 
 //hash
-int hash(const unsigned char *in, unsigned int len_in, unsigned char * out)
+int hash(const uint8_t *in, unsigned int len_in, uint8_t * out)
 {
 	//check  parameter
 	if(in==NULL || out==NULL)
@@ -74,14 +74,14 @@ int hash(const unsigned char *in, unsigned int len_in, unsigned char * out)
 }
 
 //hash
-int hash_to_k(const unsigned char *in, unsigned int len_in, unsigned char * out)
+int hash_to_k(const uint8_t *in, unsigned int len_in, uint8_t * out)
 {
 	//check  parameter
 	if(in==NULL || out==NULL)
 	{
 		return 1;
 	}	
-	unsigned char tmp_out[32];
+	uint8_t tmp_out[32];
 	
 	SHA256(in,len_in,tmp_out);
 	memcpy(out,tmp_out,MESSAGE_LEN);
@@ -90,7 +90,7 @@ int hash_to_k(const unsigned char *in, unsigned int len_in, unsigned char * out)
 }
 
 //generate seed
-int gen_seed(unsigned char *in, unsigned int len_in, unsigned char * out)
+int gen_seed(uint8_t *in, unsigned int len_in, uint8_t * out)
 {
 	//check  parameter
 	if(in==NULL || out==NULL)

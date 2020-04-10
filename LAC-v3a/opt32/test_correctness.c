@@ -15,10 +15,10 @@ static void print_uint64(unsigned long long num)
 	printf("%u",(unsigned int)(num%10));
 }
 
-int error_bit_num(unsigned char *k1, unsigned char *k2, int num)
+int error_bit_num(uint8_t *k1, uint8_t *k2, int num)
 {
 	int i,sum=0;
-	unsigned char temp;
+	uint8_t temp;
 	for(i=0;i<num;i++)
 	{
 		temp=k1[i]^k2[i];
@@ -37,10 +37,10 @@ int error_bit_num(unsigned char *k1, unsigned char *k2, int num)
 	
 	return sum;
 }
-int print_error_bit(unsigned char *k1, unsigned char *k2, int num)
+int print_error_bit(uint8_t *k1, uint8_t *k2, int num)
 {
 	int i,sum=0;
-	unsigned char temp;
+	uint8_t temp;
 	printf("\nerror bit:\n");
 	for(i=0;i<num;i++)
 	{
@@ -53,7 +53,7 @@ int print_error_bit(unsigned char *k1, unsigned char *k2, int num)
 }
 
 //print bytes
-int print_bytes(unsigned char *buf, int len)
+int print_bytes(uint8_t *buf, int len)
 {
 	int i;
 	for(i=0;i<len;i++)
@@ -69,9 +69,9 @@ int print_bytes(unsigned char *buf, int len)
 int test_pke_correctness()
 {
 
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i,j;
 	long long int  error_bit,sum=0;
 	long long int  error_num=0,sum_bits;
@@ -121,9 +121,9 @@ int test_pke_correctness()
 //test kem fo correctness
 int test_kem_fo_correctness()
 {
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i,j;
 	long long int  error_num=0;
 	
@@ -155,9 +155,9 @@ int test_kem_fo_correctness()
 //test  ke correctness
 int test_ke_correctness()
 {
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i,j;
 	long long int  error_num=0;
 	
@@ -186,9 +186,9 @@ int test_ke_correctness()
 //test  ake correctness
 int test_ake_correctness()
 {
-	unsigned char pk_a[CRYPTO_PUBLICKEYBYTES],pk_b[CRYPTO_PUBLICKEYBYTES],pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES],sk_a[CRYPTO_SECRETKEYBYTES],sk_b[CRYPTO_SECRETKEYBYTES];
-	unsigned char k_a[CRYPTO_BYTES],k_b[CRYPTO_BYTES],c_a[CRYPTO_CIPHERTEXTBYTES],c_b[2*CRYPTO_CIPHERTEXTBYTES],k1[CRYPTO_BYTES];
+	uint8_t pk_a[CRYPTO_PUBLICKEYBYTES],pk_b[CRYPTO_PUBLICKEYBYTES],pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES],sk_a[CRYPTO_SECRETKEYBYTES],sk_b[CRYPTO_SECRETKEYBYTES];
+	uint8_t k_a[CRYPTO_BYTES],k_b[CRYPTO_BYTES],c_a[CRYPTO_CIPHERTEXTBYTES],c_b[2*CRYPTO_CIPHERTEXTBYTES],k1[CRYPTO_BYTES];
 	int i,j;
 	long long int  error_num=0;
 	

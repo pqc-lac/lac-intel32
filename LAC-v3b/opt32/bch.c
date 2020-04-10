@@ -45,7 +45,7 @@ static void store_ecc8(uint8_t *dst, const uint32_t *src)
 }
 
 // bch encode
-void encode_bch(const unsigned char *data, unsigned int len, uint8_t *ecc)
+void encode_bch(const uint8_t *data, unsigned int len, uint8_t *ecc)
 {
 	int i;
 	const uint32_t *p;
@@ -323,7 +323,7 @@ int decode_bch(uint8_t *data, unsigned int len, const uint8_t *recv_ecc)
 	//post process error location
 	nbits = (len*8)+bch.ecc_bits;
 	
-	unsigned char mask_err;
+	uint8_t mask_err;
 	
 	for (i = 0; i < bch.t; i++) 
 	{

@@ -49,9 +49,9 @@ int print_cpucycles(unsigned long long *t)
 int test_pke_cpucycles()
 {
 	unsigned long long t[NTESTS];
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i;
 	unsigned long long mlen=CRYPTO_BYTES,clen=CRYPTO_CIPHERTEXTBYTES;
 
@@ -96,9 +96,9 @@ int test_pke_cpucycles()
 int test_kem_fo_cpucycles()
 {
 	unsigned long long t[NTESTS];
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i;
 	
     for(i=0;i<NTESTS;i++)
@@ -141,9 +141,9 @@ int test_kem_fo_cpucycles()
 int test_ke_cpucycles()
 {
 	unsigned long long t[NTESTS];
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i;
 	
 	//test alilce send
@@ -184,9 +184,9 @@ int test_ke_cpucycles()
 int test_ake_cpucycles()
 {
 	unsigned long long t[NTESTS];
-	unsigned char pk_a[CRYPTO_PUBLICKEYBYTES],pk_b[CRYPTO_PUBLICKEYBYTES],pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES],sk_a[CRYPTO_SECRETKEYBYTES],sk_b[CRYPTO_SECRETKEYBYTES];
-	unsigned char k_a[CRYPTO_BYTES],k_b[CRYPTO_BYTES],c_a[CRYPTO_CIPHERTEXTBYTES],c_b[2*CRYPTO_CIPHERTEXTBYTES],k1[CRYPTO_BYTES];
+	uint8_t pk_a[CRYPTO_PUBLICKEYBYTES],pk_b[CRYPTO_PUBLICKEYBYTES],pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES],sk_a[CRYPTO_SECRETKEYBYTES],sk_b[CRYPTO_SECRETKEYBYTES];
+	uint8_t k_a[CRYPTO_BYTES],k_b[CRYPTO_BYTES],c_a[CRYPTO_CIPHERTEXTBYTES],c_b[2*CRYPTO_CIPHERTEXTBYTES],k1[CRYPTO_BYTES];
 	int i;
 	
 	crypto_encrypt_keypair(pk_a,sk_a);
@@ -230,7 +230,7 @@ int test_ake_cpucycles()
 int test_hash_cpucycles()
 {
 	int i,loop=100000;
-	unsigned char buf[DIM_N],seed[SEED_LEN],out[MESSAGE_LEN];
+	uint8_t buf[DIM_N],seed[SEED_LEN],out[MESSAGE_LEN];
 	uint64_t t0,t1;
 	random_bytes(seed,SEED_LEN);
 	pseudo_random_bytes(buf,DIM_N,seed);
@@ -253,7 +253,7 @@ int test_hash_cpucycles()
 int test_aes_cpucycles()
 {
 	int i,loop=100000;
-	unsigned char buf[DIM_N],seed[SEED_LEN];
+	uint8_t buf[DIM_N],seed[SEED_LEN];
 	uint64_t t0,t1;
 	random_bytes(seed,SEED_LEN);
 	t0=__rdtsc();
@@ -275,8 +275,8 @@ int test_aes_cpucycles()
 int test_gen_psi_cpucycles()
 {
 	int i,loop=10000;
-	unsigned char seed[SEED_LEN];
-	unsigned char e[DIM_N];
+	uint8_t seed[SEED_LEN];
+	uint8_t e[DIM_N];
 	uint64_t t0,t1;
 	random_bytes(seed,SEED_LEN);
 	
@@ -296,8 +296,8 @@ int test_gen_psi_cpucycles()
 int test_gen_a_cpucycles()
 {
 	int i,loop=10000;
-	unsigned char seed[SEED_LEN];
-	unsigned char a[DIM_N];
+	uint8_t seed[SEED_LEN];
+	uint8_t a[DIM_N];
 	uint64_t t0,t1,sum;
 	random_bytes(seed,SEED_LEN);
 	sum=0;
@@ -321,8 +321,8 @@ int test_gen_a_cpucycles()
 int test_poly_mul_cpucycles()
 {
 	int i,loop=10000;
-	unsigned char a[DIM_N],pk[DIM_N],seed[SEED_LEN];
-	unsigned char sk[DIM_N];
+	uint8_t a[DIM_N],pk[DIM_N],seed[SEED_LEN];
+	uint8_t sk[DIM_N];
 	uint64_t t0,t1,sum;
 	
 	random_bytes(a,DIM_N);
@@ -348,8 +348,8 @@ int test_poly_mul_cpucycles()
 int test_init()
 {
 	int i,loop=10000;
-	unsigned char a[DIM_N],pk[DIM_N],seed[SEED_LEN];
-	unsigned char sk[DIM_N];
+	uint8_t a[DIM_N],pk[DIM_N],seed[SEED_LEN];
+	uint8_t sk[DIM_N];
 	uint64_t t0,t1,sum;
 	
 	random_bytes(a,DIM_N);
