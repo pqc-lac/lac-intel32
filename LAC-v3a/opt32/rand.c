@@ -1,78 +1,25 @@
 #include "rand.h"
-#include "rng.h"
 #include "lac_param.h"
-#include <string.h>
-#include <openssl/rand.h>
-#include <openssl/aes.h>
-#include <openssl/sha.h>
-#include <openssl/crypto.h>
-#include <openssl/evp.h>
+#include "aes.h"
+#include "sha2.h"
 
-//random bytes
-int random_bytes(uint8_t *r, unsigned int len)
-{
-	// call the random function 
-	RAND_bytes(r,len);
-//	randombytes(r,len);
-	return 0;
-}
+#include <string.h>
 
 //pseudo-random bytes
 int pseudo_random_bytes(uint8_t *r, unsigned int len, const uint8_t *seed)
 {
-	
-	int c_len;
-	uint8_t data[AES_BLOCK_SIZE],c[AES_BLOCK_SIZE];
-//	unsigned int *p=(unsigned int *)data;
-	int i,loop=len/AES_BLOCK_SIZE;
-
-	memset(r,0,len);
-	EVP_CIPHER_CTX *ctx;
-	ctx = EVP_CIPHER_CTX_new();
-	EVP_EncryptInit_ex(ctx, EVP_aes_256_ctr(), NULL, seed, NULL);
-	memset(data,0,AES_BLOCK_SIZE);
-	for(i=0;i<loop;i++)
-	{
-	//	*p=i;//set counter
-		EVP_EncryptUpdate(ctx, r+i*AES_BLOCK_SIZE, &c_len, data, AES_BLOCK_SIZE);
-	}
-	//check tail
-	if(len%AES_BLOCK_SIZE>0)
-	{
-	//	*p=loop;
-		EVP_EncryptUpdate(ctx, c, &c_len, data, AES_BLOCK_SIZE);
-	}
-	memcpy(r+loop*AES_BLOCK_SIZE,c,len%AES_BLOCK_SIZE);
-	EVP_CIPHER_CTX_free(ctx);
-	
-	 
-//	aes256ctr_prf(r,len,seed,0);
+	uint8_t data[12] = {0};
+	aes256ctx ctx;
+	aes256_keyexp(&ctx, seed);
+	aes256_ctr(r, len, data, &ctx);
 	return 0;
 }
 
 //hash
-int hash(const uint8_t *in, unsigned int len_in, uint8_t * out)
-{	
-	SHA256(in,len_in,out);
-	
-	return 0;
-}
-
-//hash
-int hash_to_k(const uint8_t *in, unsigned int len_in, uint8_t * out)
+int hash_to_k(const unsigned char *in, unsigned int len_in, unsigned char * out)
 {
-	uint8_t tmp_out[32];
-	
-	SHA256(in,len_in,tmp_out);
+	unsigned char tmp_out[32];
+	sha256(tmp_out, in, len_in);
 	memcpy(out,tmp_out,MESSAGE_LEN);
-	
 	return 0;
 }
-
-//generate seed
-int gen_seed(uint8_t *in, unsigned int len_in, uint8_t * out)
-{
-	SHA256(in,len_in,out);
-	return 0;
-}
-
