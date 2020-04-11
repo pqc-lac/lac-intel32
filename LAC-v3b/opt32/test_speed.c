@@ -13,8 +13,8 @@ int test_poly_mul_speed()
 {
 	clock_t start,finish;
     double total_time;
-	unsigned char a[DIM_N],pk[DIM_N],seed[SEED_LEN];
-	unsigned char sk[DIM_N];
+	uint8_t a[DIM_N],pk[DIM_N],seed[SEED_LEN];
+	uint8_t sk[DIM_N];
 	int i;
 	
 	random_bytes(a,DIM_N);
@@ -38,9 +38,9 @@ int test_pke_speed()
 {
 	clock_t start,finish;
     double total_time;
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i;
 	unsigned long long mlen=CRYPTO_BYTES,clen=CRYPTO_CIPHERTEXTBYTES;
 	
@@ -87,9 +87,9 @@ int test_kem_fo_speed()
 {
 	clock_t start,finish;
     double total_time;
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i;
 	
 	start=clock();
@@ -133,9 +133,9 @@ int test_ke_speed()
 {
 	clock_t start,finish;
     double total_time;
-	unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES];
-	unsigned char k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
+	uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES];
+	uint8_t k1[CRYPTO_BYTES],k2[CRYPTO_BYTES],c[CRYPTO_CIPHERTEXTBYTES];
 	int i;
 
 	//test alice send
@@ -177,9 +177,9 @@ int test_ake_speed()
 {
 	clock_t start,finish;
     double total_time;
-	unsigned char pk_a[CRYPTO_PUBLICKEYBYTES],pk_b[CRYPTO_PUBLICKEYBYTES],pk[CRYPTO_PUBLICKEYBYTES];
-	unsigned char sk[CRYPTO_SECRETKEYBYTES],sk_a[CRYPTO_SECRETKEYBYTES],sk_b[CRYPTO_SECRETKEYBYTES];
-	unsigned char k_a[CRYPTO_BYTES],k_b[CRYPTO_BYTES],c_a[CRYPTO_CIPHERTEXTBYTES],c_b[2*CRYPTO_CIPHERTEXTBYTES],k1[CRYPTO_BYTES];
+	uint8_t pk_a[CRYPTO_PUBLICKEYBYTES],pk_b[CRYPTO_PUBLICKEYBYTES],pk[CRYPTO_PUBLICKEYBYTES];
+	uint8_t sk[CRYPTO_SECRETKEYBYTES],sk_a[CRYPTO_SECRETKEYBYTES],sk_b[CRYPTO_SECRETKEYBYTES];
+	uint8_t k_a[CRYPTO_BYTES],k_b[CRYPTO_BYTES],c_a[CRYPTO_CIPHERTEXTBYTES],c_b[2*CRYPTO_CIPHERTEXTBYTES],k1[CRYPTO_BYTES];
 	int i;
 	
 	// generate public parameter  a and the key pair of alice and bob

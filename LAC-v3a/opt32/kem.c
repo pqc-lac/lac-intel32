@@ -5,36 +5,29 @@
 #include "ecc.h"
 
 //generate keypair
-int crypto_kem_keypair(unsigned char *pk, unsigned char *sk)
+int crypto_kem_keypair(uint8_t *pk, uint8_t *sk)
 {
 	//call the key generation algorithm of pke
 	crypto_encrypt_keypair(pk, sk);
 	return 0;
 }
-int crypto_kem_enc( unsigned char *ct, unsigned char *ss, const unsigned char *pk)
+int crypto_kem_enc( uint8_t *ct, uint8_t *ss, const uint8_t *pk)
 {
 	kem_enc_fo(pk,ss,ct);
 	return 0;
 }
-int crypto_kem_dec( unsigned char *ss, const unsigned char *ct, const unsigned char *sk)
+int crypto_kem_dec( uint8_t *ss, const uint8_t *ct, const uint8_t *sk)
 {
-	const unsigned char *pk;
+	const uint8_t *pk;
 	pk=sk+SK_LEN;
 	kem_dec_fo(pk,sk,ct,ss);
 	return 0;
 }
 // fo encryption for cca security 
-int kem_enc_fo(const unsigned char *pk, unsigned char *k, unsigned char *c)
+int kem_enc_fo(const uint8_t *pk, uint8_t *k, uint8_t *c)
 {
-	unsigned char buf[MESSAGE_LEN],seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
+	uint8_t buf[MESSAGE_LEN],seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
 	unsigned long long clen;
-
-	
-	//check parameter
-	if(pk==NULL || k==NULL || c==NULL)
-	{
-		return -1;
-	}
 	
 	//generate random message m, stored in buf
 	random_bytes(buf,MESSAGE_LEN);
@@ -52,17 +45,10 @@ int kem_enc_fo(const unsigned char *pk, unsigned char *k, unsigned char *c)
 }
 
 // fo encryption for cca security with seed
-int kem_enc_fo_seed(const unsigned char *pk, unsigned char *k, unsigned char *c, unsigned char *seed)
+int kem_enc_fo_seed(const uint8_t *pk, uint8_t *k, uint8_t *c, uint8_t *seed)
 {
-	unsigned char buf[MESSAGE_LEN],local_seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
+	uint8_t buf[MESSAGE_LEN],local_seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
 	unsigned long long clen;
-
-	
-	//check parameter
-	if(pk==NULL || k==NULL || c==NULL)
-	{
-		return -1;
-	}
 	
 	//generate random message m from seed, stored in buf
 	pseudo_random_bytes(buf,MESSAGE_LEN,seed);
@@ -80,17 +66,11 @@ int kem_enc_fo_seed(const unsigned char *pk, unsigned char *k, unsigned char *c,
 }
 
 // decrypt of fo mode
-int kem_dec_fo(const unsigned char *pk, const unsigned char *sk, const unsigned char *c, unsigned char *k)
+int kem_dec_fo(const uint8_t *pk, const uint8_t *sk, const uint8_t *c, uint8_t *k)
 {
-	unsigned char buf[MESSAGE_LEN+CIPHER_LEN],seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
+	uint8_t buf[MESSAGE_LEN+CIPHER_LEN],seed[SEED_LEN],seed_buf[MESSAGE_LEN+SEED_LEN];
 	unsigned long long mlen,clen;
-	unsigned char c_v[CIPHER_LEN];
-	
-	//check parameter
-	if(pk==NULL || sk==NULL || k==NULL || c==NULL)
-	{
-		return -1;
-	}
+	uint8_t c_v[CIPHER_LEN];
 	
 	//compute m from c
 	pke_dec(sk,c,CIPHER_LEN, buf,&mlen);
@@ -106,7 +86,7 @@ int kem_dec_fo(const unsigned char *pk, const unsigned char *sk, const unsigned 
 	if(memcmp(c,c_v,CIPHER_LEN)!=0)
 	{
 		//k=hash(hash(sk)|c)
-		hash((unsigned char*)sk,SK_LEN,buf);
+		hash((uint8_t*)sk,SK_LEN,buf);
 		hash(buf,MESSAGE_LEN+CIPHER_LEN,k);
 	}
 	

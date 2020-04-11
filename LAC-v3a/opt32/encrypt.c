@@ -7,7 +7,7 @@
 
 #define RATIO 125
 
-static int d2_decode(unsigned char *v1, unsigned char *v2, unsigned char *data, int len)
+static int d2_decode(uint8_t *v1, uint8_t *v2, uint8_t *data, int len)
 {
 	int i;
 	int temp1,temp2;
@@ -44,26 +44,16 @@ static int d2_decode(unsigned char *v1, unsigned char *v2, unsigned char *data, 
 }
 
 //key generation
-int crypto_encrypt_keypair( unsigned char *pk, unsigned char *sk)
+int crypto_encrypt_keypair( uint8_t *pk, uint8_t *sk)
 {
-	//check parameter
-	if(pk==NULL || sk==NULL)
-	{
-		return -1;
-	}
 	kg(pk,sk);
 	
 	return 0;
 }
 
 //encryption
-int crypto_encrypt( unsigned char *c, unsigned long long *clen, const unsigned char *m, unsigned long long mlen, const unsigned char *pk)
+int crypto_encrypt( uint8_t *c, unsigned long long *clen, const uint8_t *m, unsigned long long mlen, const uint8_t *pk)
 {
-	//check parameter
-	if(c==NULL || m==NULL || pk==NULL)
-	{
-		return -1;
-	}
 	if(mlen>MESSAGE_LEN)
 	{
 		return -1;
@@ -75,14 +65,8 @@ int crypto_encrypt( unsigned char *c, unsigned long long *clen, const unsigned c
 	return 0;
 }
 //decryption
-int crypto_encrypt_open(unsigned char *m, unsigned long long *mlen,const unsigned char *c, unsigned long long clen,const unsigned char *sk)
+int crypto_encrypt_open(uint8_t *m, unsigned long long *mlen,const uint8_t *c, unsigned long long clen,const uint8_t *sk)
 {
-	//check parameter
-	if(sk==NULL || m==NULL || c==NULL || mlen==NULL)
-	{
-		return -1;
-	}
-	
 	//call pke decryption function
 	pke_dec(sk,c,clen,m,mlen);
 
@@ -90,16 +74,11 @@ int crypto_encrypt_open(unsigned char *m, unsigned long long *mlen,const unsigne
 }
 
 //key generation with seed
-int kg_seed(unsigned char *pk, unsigned char *sk, unsigned char *seed)
+int kg_seed(uint8_t *pk, uint8_t *sk, uint8_t *seed)
 {
-	unsigned char seeds[3*SEED_LEN];
-	unsigned char a[DIM_N];
-	unsigned char e[DIM_N];
-	//check pointer
-	if(pk==NULL || sk==NULL)
-	{
-		return -1;
-	}
+	uint8_t seeds[3*SEED_LEN];
+	uint8_t a[DIM_N];
+	uint8_t e[DIM_N];
 	
 	//generate three seeds for a,sk,e
 	pseudo_random_bytes(seeds,3*SEED_LEN,seed);	
@@ -122,9 +101,9 @@ int kg_seed(unsigned char *pk, unsigned char *sk, unsigned char *seed)
 }
 
 //key generation
-int kg(unsigned char *pk, unsigned char *sk)
+int kg(uint8_t *pk, uint8_t *sk)
 {
-	unsigned char seed[SEED_LEN];
+	uint8_t seed[SEED_LEN];
 	
 	//generate seed
 	random_bytes(seed,SEED_LEN);		
@@ -134,9 +113,9 @@ int kg(unsigned char *pk, unsigned char *sk)
 	return 0;
 }
 // encryption
-int pke_enc(const unsigned char *pk, const unsigned char *m, unsigned long long mlen, unsigned char *c, unsigned long long *clen)
+int pke_enc(const uint8_t *pk, const uint8_t *m, unsigned long long mlen, uint8_t *c, unsigned long long *clen)
 {
-	unsigned char seed[SEED_LEN];
+	uint8_t seed[SEED_LEN];
 	
 	//generate seed
 	random_bytes(seed,SEED_LEN);
@@ -148,19 +127,13 @@ int pke_enc(const unsigned char *pk, const unsigned char *m, unsigned long long 
 
 
 // decrypt
-int pke_dec(const unsigned char *sk, const unsigned char *c,unsigned long long clen, unsigned char *m, unsigned long long *mlen)
+int pke_dec(const uint8_t *sk, const uint8_t *c,unsigned long long clen, uint8_t *m, unsigned long long *mlen)
 {
-	//check parameter
-	if(sk==NULL || m==NULL || c==NULL)
-	{
-		return -1;
-	}
-	
-	unsigned char out[DIM_N];
-	unsigned char c2[C2_VEC_NUM];
+	uint8_t out[DIM_N];
+	uint8_t c2[C2_VEC_NUM];
 	int c2_len=(clen-DIM_N)*2;
-	unsigned char code[CODE_LEN],*p_code;
-	unsigned char m_buf[MESSAGE_LEN];
+	uint8_t code[CODE_LEN],*p_code;
+	uint8_t m_buf[MESSAGE_LEN];
 
 	//c2 decompress
 	poly_decompress(c+DIM_N,c2,c2_len);
@@ -184,13 +157,13 @@ int pke_dec(const unsigned char *sk, const unsigned char *c,unsigned long long c
 	return 0;
 }
 
-static int encode_to_e2(unsigned char *e2, const unsigned char *m, unsigned long long mlen, int *c2_len)
+static int encode_to_e2(uint8_t *e2, const uint8_t *m, unsigned long long mlen, int *c2_len)
 {
 	int i;
 	int8_t message;
 	int vec_bound;
-	unsigned char m_buf[MESSAGE_LEN];
-	unsigned char code[CODE_LEN],*p_code;
+	uint8_t m_buf[MESSAGE_LEN];
+	uint8_t code[CODE_LEN],*p_code;
 	//BCH encoding
 	//package m_buf
 	memset(m_buf,0,MESSAGE_LEN);
@@ -218,21 +191,16 @@ static int encode_to_e2(unsigned char *e2, const unsigned char *m, unsigned long
 }
 
 // encryption with seed
-int pke_enc_seed(const unsigned char *pk, const unsigned char *m, unsigned long long mlen, unsigned char *c, unsigned long long *clen, unsigned char *seed)
+int pke_enc_seed(const uint8_t *pk, const uint8_t *m, unsigned long long mlen, uint8_t *c, unsigned long long *clen, uint8_t *seed)
 {
-	unsigned char seeds[3*SEED_LEN];
-	unsigned char r[DIM_N];
-	unsigned char e1[DIM_N],e2[DIM_N];
-	unsigned char c2[C2_VEC_NUM];
-	unsigned char a[DIM_N];
+	uint8_t seeds[3*SEED_LEN];
+	uint8_t r[DIM_N];
+	uint8_t e1[DIM_N],e2[DIM_N];
+	uint8_t c2[C2_VEC_NUM];
+	uint8_t a[DIM_N];
 	
 	int c2_len;
-	
-	//check parameter
-	if(pk==NULL || m==NULL || c==NULL )
-	{
-		return -1;
-	}
+
 	if(mlen>MESSAGE_LEN)
 	{
 		return -1;

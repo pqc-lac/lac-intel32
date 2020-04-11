@@ -3,14 +3,10 @@
 #include <string.h>
 
 //Alice send: generate pk and sk, and send pk and cca kem ciphertext of pk_b to Bob
-int crypto_ake_alice_send(unsigned char *pk,unsigned char *sk, unsigned char *pk_b, unsigned char *sk_a, unsigned char *c, unsigned char *k1)
+int crypto_ake_alice_send(uint8_t *pk,uint8_t *sk, uint8_t *pk_b, uint8_t *sk_a, uint8_t *c, uint8_t *k1)
 {
-	unsigned char seed[SEED_LEN],buf[CRYPTO_SECRETKEYBYTES+SEED_LEN];
-	//check pointer
-	if(pk==NULL || sk==NULL || pk_b==NULL || k1==NULL)
-	{
-		return  -1;
-	}
+	uint8_t seed[SEED_LEN],buf[CRYPTO_SECRETKEYBYTES+SEED_LEN];
+
 	//call key generation algorithm to get pk and sk
 	kg(pk,sk);
 	// compute seed=hash(random_seed|sk_a)
@@ -23,17 +19,12 @@ int crypto_ake_alice_send(unsigned char *pk,unsigned char *sk, unsigned char *pk
 	return 0;
 }
 // Bob receive: receive  pk, randomly choose m, and encryrpt m with pk to generate c, k1. k=HASH(pk_a,pk_b,pk,c3,k1,k2,k3)
-int crypto_ake_bob_receive(unsigned char *pk_b, unsigned char *sk_b, unsigned char *pk_a, unsigned char *pk, unsigned char *c_in,unsigned char *c_out , unsigned char *k)
+int crypto_ake_bob_receive(uint8_t *pk_b, uint8_t *sk_b, uint8_t *pk_a, uint8_t *pk, uint8_t *c_in,uint8_t *c_out , uint8_t *k)
 {
-	unsigned char k1[MESSAGE_LEN],k2[MESSAGE_LEN],k3[MESSAGE_LEN];
-	unsigned char in[3*MESSAGE_LEN+3*PK_LEN+CIPHER_LEN],seed[SEED_LEN];
-	unsigned char buf[CRYPTO_SECRETKEYBYTES+SEED_LEN];
+	uint8_t k1[MESSAGE_LEN],k2[MESSAGE_LEN],k3[MESSAGE_LEN];
+	uint8_t in[3*MESSAGE_LEN+3*PK_LEN+CIPHER_LEN],seed[SEED_LEN];
+	uint8_t buf[CRYPTO_SECRETKEYBYTES+SEED_LEN];
 	unsigned long long clen;
-	//check pointer
-	if(pk_b==NULL || sk_b==NULL|| pk_a==NULL || pk==NULL|| c_in==NULL || c_out==NULL || k==NULL)
-	{
-		return  -1;
-	}
 	
 	// compute seed=hash(random_seed|sk_b)
 	random_bytes(buf,SEED_LEN);
@@ -66,16 +57,12 @@ int crypto_ake_bob_receive(unsigned char *pk_b, unsigned char *sk_b, unsigned ch
 	return 0;
 }
 //Alice receive: receive c, and decrypt to get k2, k3 and comute k=HASH(pk_a,pk_b,pk,c3,k1,k2,k3)
-int crypto_ake_alice_receive(unsigned char *pk_a, unsigned char *sk_a, unsigned char *pk_b, unsigned char *pk, unsigned char *sk, unsigned char *c1, unsigned char *c_in, unsigned char *k1, unsigned char *k)
+int crypto_ake_alice_receive(uint8_t *pk_a, uint8_t *sk_a, uint8_t *pk_b, uint8_t *pk, uint8_t *sk, uint8_t *c1, uint8_t *c_in, uint8_t *k1, uint8_t *k)
 {
-	unsigned char k2[MESSAGE_LEN],k3[MESSAGE_LEN];
-	unsigned char in[3*MESSAGE_LEN+3*PK_LEN+CIPHER_LEN];
+	uint8_t k2[MESSAGE_LEN],k3[MESSAGE_LEN];
+	uint8_t in[3*MESSAGE_LEN+3*PK_LEN+CIPHER_LEN];
 	unsigned long long  mlen;
-	//check pointer
-	if(pk_a==NULL || sk_a==NULL|| pk==NULL || sk==NULL || c_in==NULL || k1==NULL || k==NULL)
-	{
-		return  -1;
-	}
+
 	//decrypt c of cca kem to get k2
 	kem_dec_fo(pk_a,sk_a,c_in,k2);
 	
